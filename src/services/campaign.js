@@ -41,13 +41,22 @@ module.exports = {
     return { listCampaign, totalCampaign };
   },
 
-  createTrackingId: async (campaignId, campaignName) => {
+  enableTracking: async (campaignId, campaignName) => {
     const trackingId = await analytics().management.webproperties.insert({
       accountId: "158530582",
       resource: {
         name: campaignName,
       },
     });
+    const view = await analytics().management.profiles.insert({
+      accountId: "158530582",
+      webPropertyId: trackingId.data.id,
+      resource: {
+        name: campaignName,
+      },
+    });
+    console.log(trackingId);
+    console.log(view);
     await CampaignModel.findOneAndUpdate(
       { _id: campaignId },
       { $set: { "googleAnalytics.trackingId": trackingId.data.id } }
@@ -55,19 +64,19 @@ module.exports = {
     return trackingId.data.id;
   },
 
-  enableTracking: async (campaignId) => {
-    const campaign = await CampaignModel.findById({ _id: campaignId }).lean();
-    console.log(!campaign.googleAnalytics.trackingId);
-    if (campaign && !campaign.googleAnalytics.trackingId) {
-      const view = await analytics().management.profiles.insert({
-        accountId: "158530582",
-        webPropertyId: campaign.googleAnalytics.trackingId,
-        resource: {
-          name: campaign.name,
-        },
-      });
-      console.log(view);
-      return true;
-    }
-  },
+  // enableTracking: async (campaignId) => {
+  //   const campaign = await CampaignModel.findById({ _id: campaignId }).lean();
+  //   console.log(!campaign.googleAnalytics.trackingId);
+  //   if (campaign && !campaign.googleAnalytics.trackingId) {
+  //     const view = await analytics().management.profiles.insert({
+  //       accountId: "158530582",
+  //       webPropertyId: campaign.googleAnalytics.trackingId,
+  //       resource: {
+  //         name: campaign.name,
+  //       },
+  //     });
+  //     console.log(view);
+  //     return true;
+  //   }
+  // },
 };
