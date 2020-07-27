@@ -1,11 +1,20 @@
 const CampaignModel = require("../models/campaign");
 const WorkspaceModel = require("../models/workspace");
 const escapeRegex = require("../utils/regex-escape");
-const analytics = require("../utils/googleAnalytics");
+const GA = require("../utils/googleAnalytics");
 
 module.exports = {
-  createCampaign: (name, email, createdAt, expiredAt) =>
-    CampaignModel.create({ name, email, createdAt, expiredAt }),
+  createCampaign: async (name, email, createdAt, expiredAt) => {
+    const campaign = await CampaignModel.create({
+      name,
+      email,
+      createdAt,
+      expiredAt,
+    });
+    const workspace = await WorkspaceModel.findOne({ email: email }).lean();
+    campaign.workspaceName = workspace.name;
+    return campaign;
+  },
 
   getListCampaign: async (page = 1, query) => {
     const pageSize = 3;
@@ -24,7 +33,6 @@ module.exports = {
       .skip(pageSize * page - pageSize)
       .limit(pageSize)
       .lean();
-
     await Promise.all(
       listCampaign.map(async (campaign) => {
         const workspace = await WorkspaceModel.findOne({
@@ -42,13 +50,13 @@ module.exports = {
   },
 
   enableTracking: async (campaignId, campaignName) => {
-    const trackingId = await analytics().management.webproperties.insert({
+    const trackingId = await GA.analytics().management.webproperties.insert({
       accountId: "158530582",
       resource: {
         name: campaignName,
       },
     });
-    const view = await analytics().management.profiles.insert({
+    const view = await GA.analytics().management.profiles.insert({
       accountId: "158530582",
       webPropertyId: trackingId.data.id,
       resource: {
@@ -62,6 +70,13 @@ module.exports = {
       { $set: { "googleAnalytics.trackingId": trackingId.data.id } }
     );
     return trackingId.data.id;
+  },
+  getReports: async (campaignId) => {
+    await GA.analyticsReporting().reports.batchGet({
+      requestBody: {
+        reportRequests: [],
+      },
+    });
   },
 
   // enableTracking: async (campaignId) => {

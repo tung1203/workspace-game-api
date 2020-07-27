@@ -27,6 +27,6 @@ module.exports = /* GraphQL */ `
       expiredAt: String
     ): Campaign
     enableTracking(campaignId: String, campaignName: String): String
-    # enableTracking(campaignId: String): Boolean
+    getAnalytics(campaignId: String): String
   }
 `;
