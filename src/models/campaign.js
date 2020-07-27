@@ -5,6 +5,14 @@ module.exports = mongoose.model(
   {
     name: String,
     email: String,
+    googleAnalytics: {
+      trackingId: String,
+      isActive: false,
+    },
+    // trackingId: {
+    //   type: String,
+    //   default: null,
+    // },
     createdAt: {
       type: Number,
       default: Date.now,

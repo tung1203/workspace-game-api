@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "workspace-game-284304",
+  "private_key_id": "c6219e8198d4fef32c7c6da8bf98cee70390beef",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDPGEl9Ymbjs/P+\nX0+c1QcFM3T5eOyXoEf68Ywg5ATjB1y8l+o+fItDirGHQhhq961w1sEejBvh1NZ6\noeguo1VTAWscdnDej68fVjd1f9NPHmyPV5CVwa9xy787VVek3gSKyTX+S8XSRBqO\nCbm2WYMT7YhBGNFdy7ZPapLfZCb8EF+KX5KC0OJ9fAv8X4R7o+vQ1n83BffdMQKw\naxJAXCEDWa+F+lAaVxl3I13SOAGbRZ0ecuEV3pkfBF90XEnig/ZQFsECLjPBmlwI\nCBltiOF1h31XtmljA8Y+vt0aZ87vhllV/ZIR3YkU/S6plrE3BZuxtdTcsmbGcVPe\n6J1dM6MLAgMBAAECggEACwi5vaxVBr6ApRB8pEK2GDZY01lN4yRJ7C/GLhMdbt/m\nYTFc7I25OSo2HEVOxMBD5aEOSBY3VBiBgaYybJhiREUX6REnIWHuzDt37VLtYNKi\nU8mFbXKU6k9soHjYbciF3cPWacwCvcRy1ReP5WHZOeIW4j+0GWHFvxnSuoP9Dxf9\npJ/2s2Qr1uV597g8Fh04kEZYoMzo/v/QXaX5Rdzx7J12i3IBQ8pfl9qPi/bhq5qX\nkj93CC8TiobUxjd+NTO3JuPuF3xQCwZmfm6k5U0zrUAUuLPgFzkP0M9QasGk6UJz\nxezLOL9BYa4ks6mmvXiiYLi7CkrXLS06ovShcBYuVQKBgQD2gAzff76O3WWUJ3ak\nlUrd0lHdiYgdwHLzBqdF7nBsViYRYAUrtZMewNW+1ZX9CgSSR62EVZLti0MNvXqA\nQN923EDAifWyTTaZfR1vUr3XdwRvgTjUlZ4hWghf8MDyjJpoZVu+wEb9TPWZOcYa\nD4e3oWB058XYqUczz3xUR2WilwKBgQDXE3edB0jIMIR5L5JqQRaFfwgjsG7/FNOD\n8RlM1sxncrrVZaOpqzwKF2VuURiFGZlGZ/Er2iF8aqKqBHo2eeAZvwBLBho2dEWK\nfoQ4i524bHnkUkYlio9rAl77/ZkNqRGSwLdxO+Bpny4CRfacYABmldrJd0wSv/DL\nk6yHTPC1rQKBgAiYLFq6jH1UsM76lUNlxSd4xsvvmKRY6mkYyUpB5v+P/WHLtEJy\n4T9IP+uYbNNWvxQOlbkwdp/7pAndmmDQYjo1sbhE1yExWf7+AsG349CYYLo2ijG3\nSb0l83bM4R1T06piJlG/SHpabZG7FvIfqn63jLJmxloohMgEqvQRTTTfAoGAGhVW\nUEjt3rljl37ZduFl5dK+HfXrwCu6ayn2M4dpSrJzTiYBbzZBFcg4mORk4N914z//\n052kqf4UtCHO4IRvVTAAzRh0XV5EgMNPLbxg6Fjff30q3KqtMgEbm9vpj+qNIwsU\nNDtav/R6E/SAL/7Ejaxm2EALjcqRXV8PcWk3WBECgYEAp+E30oVN83S6XcnjKH30\n5v0QcdZ9LFTLatODdCbTdqWmLV6A7rBtE0sMiKc5mQtSWE4rYFQzP2Xta+clAYDj\n6Vds9tifCxA7IJxp7NRiOOJb+7eOVaL7r7DOAakPuD0DShWmoPg0eEb0rlBaSQ26\n6pBqWeXKX+x7GDngRSvMIGs=\n-----END PRIVATE KEY-----\n",
+  "client_email": "workspace-api@workspace-game-284304.iam.gserviceaccount.com",
+  "client_id": "113634462323207444430",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/workspace-api%40workspace-game-284304.iam.gserviceaccount.com"
+}
