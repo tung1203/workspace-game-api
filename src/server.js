@@ -54,7 +54,7 @@ const main = async () => {
   require("./graph/workspace")(api);
   require("./graph/campaign")(api);
 
-  app.use("/leaderboard", leaderboard);
+  // app.use("/leaderboard", leaderboard);
   app.listen(8080, () => {
     console.log("server is running");
   });
