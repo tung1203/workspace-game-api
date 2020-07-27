@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const { google } = require("googleapis");
-
+const leaderboard = require("./routes/leaderboard");
 const main = async () => {
   const api = express.Router();
   const app = express();
@@ -51,10 +51,10 @@ const main = async () => {
   });
 
   app.use("/api", api);
-
   require("./graph/workspace")(api);
   require("./graph/campaign")(api);
 
+  app.use("/leaderboard", leaderboard);
   app.listen(8080, () => {
     console.log("server is running");
   });
