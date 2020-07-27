@@ -16,11 +16,11 @@ module.exports = {
       );
     },
 
-    createTrackingId: (_, { campaignId, campaignName }) =>
-      campaignServices.createTrackingId(campaignId, campaignName),
+    enableTracking: (_, { campaignId, campaignName }) =>
+      campaignServices.enableTracking(campaignId, campaignName),
 
-    enableTracking: (_, { campaignId }) => {
-      return campaignServices.enableTracking(campaignId);
-    },
+    // enableTracking: (_, { campaignId }) => {
+    //   return campaignServices.enableTracking(campaignId);
+    // },
   },
 };
