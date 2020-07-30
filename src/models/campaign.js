@@ -7,6 +7,7 @@ module.exports = mongoose.model(
     email: String,
     googleAnalytics: {
       trackingId: String,
+      viewId: String,
       isActive: false,
     },
     // trackingId: {

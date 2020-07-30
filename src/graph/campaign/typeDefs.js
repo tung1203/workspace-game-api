@@ -1,7 +1,17 @@
 module.exports = /* GraphQL */ `
   type googleAnalytics {
     trackingId: String
+    viewId: String
     isActive: Boolean
+  }
+  type PageGa {
+    pagePath: String
+    pageviews: String
+    uniquePageviews: String
+    avgTimeOnPage: String
+    entrances: String
+    bounceRate: String
+    exitRate: String
   }
   type Campaign {
     _id: String
@@ -16,8 +26,14 @@ module.exports = /* GraphQL */ `
     listCampaign: [Campaign]
     totalCampaign: Int
   }
+  type ReportEvent{
+    totalsForAllResults: Int
+    events: [[String]]
+  }
   type Query {
     getListCampaign(page: Int, query: String): Pagination
+    getReports(campaignId: String): ReportEvent
+    getGaTraffic(campaignId: String): [PageGa]
   }
   type Mutation {
     createCampaign(
@@ -27,6 +43,5 @@ module.exports = /* GraphQL */ `
       expiredAt: String
     ): Campaign
     enableTracking(campaignId: String, campaignName: String): String
-    getAnalytics(campaignId: String): String
   }
 `;

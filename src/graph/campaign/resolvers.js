@@ -5,6 +5,12 @@ module.exports = {
     getListCampaign: async (_, { page, query }) => {
       return await campaignServices.getListCampaign(page, query);
     },
+    getReports: (_, { campaignId }) => {
+      return campaignServices.getReports(campaignId);
+    },
+    getGaTraffic: async (_, { campaignId }) => {
+      return await campaignServices.getGaTraffic(campaignId);
+    },
   },
   Mutation: {
     createCampaign: async (_, { name, email, createdAt, expiredAt }) => {
@@ -15,12 +21,7 @@ module.exports = {
         expiredAt
       );
     },
-
     enableTracking: (_, { campaignId, campaignName }) =>
       campaignServices.enableTracking(campaignId, campaignName),
-
-    // enableTracking: (_, { campaignId }) => {
-    //   return campaignServices.enableTracking(campaignId);
-    // },
   },
 };
