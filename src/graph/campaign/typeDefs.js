@@ -10,7 +10,7 @@ module.exports = /* GraphQL */ `
     newUsers: Int
     sessions: Int
     avgSessionDuration: String
-    bounceRate: Int
+    bounceRate: String
   }
   type getGaTrafficByDay {
     day: String
