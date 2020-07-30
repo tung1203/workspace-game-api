@@ -13,7 +13,7 @@ module.exports = /* GraphQL */ `
     bounceRate: String
   }
   type getGaTrafficByDay {
-    day: String
+    date: String
     numberOfUser: Int
   }
   type Campaign {
