@@ -16,6 +16,15 @@ module.exports = /* GraphQL */ `
     date: String
     numberOfUser: Int
   }
+  type getSources {
+    sourceMedium: String
+    users: Int
+    newUsers: Int
+    sessions: Int
+    bounceRate: String
+    pageviewsPerSession: String
+    avgSessionDuration: String
+  }
   type Campaign {
     _id: String
     name: String
@@ -29,7 +38,7 @@ module.exports = /* GraphQL */ `
     listCampaign: [Campaign]
     totalCampaign: Int
   }
-  type ReportEvent{
+  type ReportEvent {
     totalsForAllResults: Int
     events: [[String]]
   }
@@ -38,6 +47,7 @@ module.exports = /* GraphQL */ `
     getReports(campaignId: String): ReportEvent
     getGaTraffic(campaignId: String): PageGa
     getGaTrafficByDay(campaignId: String): [getGaTrafficByDay]
+    getSources(campaignId: String): [getSources]
   }
   type Mutation {
     createCampaign(

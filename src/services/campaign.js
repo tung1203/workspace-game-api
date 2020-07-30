@@ -139,6 +139,55 @@ module.exports = {
     console.log(data);
     return data;
   },
+  getSources: async (campaignId) => {
+    const campaign = await CampaignModel.findById(campaignId).lean();
+    const reports = await GA.analyticsReporting().reports.batchGet({
+      requestBody: {
+        reportRequests: [
+          {
+            viewId: campaign.googleAnalytics.viewId,
+            dateRanges: [
+              {
+                startDate: "2020-07-27",
+                endDate: "2020-07-30",
+              },
+            ],
+            metrics: [
+              { expression: "ga:users" },
+              { expression: "ga:newUsers" },
+              { expression: "ga:sessions" },
+              { expression: "ga:bounceRate" },
+              { expression: "ga:pageviewsPerSession" },
+              { expression: "ga:avgSessionDuration" },
+            ],
+            dimensions: [{ name: "ga:sourceMedium" }],
+          },
+        ],
+      },
+    });
+    const data = [];
+    reports.data.reports[0].data.rows.map((row) => {
+      data.push(
+        _.zipObject(
+          [
+            "sourceMedium",
+            "users",
+            "newUsers",
+            "sessions",
+            "bounceRate",
+            "pageviewsPerSession",
+            "avgSessionDuration",
+          ],
+          [
+            ...row.dimensions.map((dimension) => dimension),
+            ..._.flattenDeep(row.metrics.map((metric) => metric.values)),
+          ]
+        )
+      );
+    });
+    console.log(data);
+    return data;
+  },
   getGaTrafficByDay: async (campaignId, fromDate, toDate) => {
     const campaign = await CampaignModel.findById(campaignId).lean();
     const reports = await GA.analyticsReporting().reports.batchGet({
