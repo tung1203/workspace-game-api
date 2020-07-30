@@ -11,6 +11,9 @@ module.exports = {
     getGaTraffic: async (_, { campaignId }) => {
       return await campaignServices.getGaTraffic(campaignId);
     },
+    getGaTrafficByDay: async (_, { campaignId }) => {
+      return await campaignServices.getGaTrafficByDay(campaignId);
+    },
   },
   Mutation: {
     createCampaign: async (_, { name, email, createdAt, expiredAt }) => {

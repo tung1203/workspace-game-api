@@ -5,13 +5,16 @@ module.exports = /* GraphQL */ `
     isActive: Boolean
   }
   type PageGa {
-    pagePath: String
-    pageviews: String
-    uniquePageviews: String
-    avgTimeOnPage: String
-    entrances: String
-    bounceRate: String
-    exitRate: String
+    pageviews: Int
+    users: Int
+    newUsers: Int
+    sessions: Int
+    avgSessionDuration: String
+    bounceRate: Int
+  }
+  type getGaTrafficByDay {
+    day: String
+    numberOfUser: Int
   }
   type Campaign {
     _id: String
@@ -33,7 +36,8 @@ module.exports = /* GraphQL */ `
   type Query {
     getListCampaign(page: Int, query: String): Pagination
     getReports(campaignId: String): ReportEvent
-    getGaTraffic(campaignId: String): [PageGa]
+    getGaTraffic(campaignId: String): PageGa
+    getGaTrafficByDay(campaignId: String): [getGaTrafficByDay]
   }
   type Mutation {
     createCampaign(

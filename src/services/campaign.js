@@ -94,11 +94,6 @@ module.exports = {
   },
   getGaTraffic: async (campaignId) => {
     const campaign = await CampaignModel.findById(campaignId).lean();
-    // const reports = await GA.analytics().data.realtime.get({
-    //   ids: `ga:${campaign.googleAnalytics.viewId}`,
-    //   metrics: "ga:users",
-    //   dimensions: "ga:userType,ga:sessionCount",
-    // });
     const reports = await GA.analyticsReporting().reports.batchGet({
       requestBody: {
         reportRequests: [
@@ -107,45 +102,75 @@ module.exports = {
             dateRanges: [
               {
                 startDate: "2020-07-27",
-                endDate: "2020-07-29",
+                endDate: "2020-07-30",
               },
             ],
             metrics: [
               { expression: "ga:pageviews" },
-              { expression: "ga:uniquePageviews" },
-              { expression: "ga:avgTimeOnPage" },
-              { expression: "ga:entrances" },
+              { expression: "ga:users" },
+              { expression: "ga:newUsers" },
+              { expression: "ga:sessions" },
+              { expression: "ga:avgSessionDuration" },
               { expression: "ga:bounceRate" },
-              { expression: "ga:exitRate" },
             ],
-            dimensions: [
-              { name: "ga:pagePath" },
-            ],
+            // dimensions: [{ name: "ga:sessions" }],
           },
         ],
       },
     });
     // console.log(util.inspect(reports, false, null, true /* enable colors */));
+    let data;
+    reports.data.reports[0].data.rows.map((row) => {
+      data = _.zipObject(
+        [
+          "pageviews",
+          "users",
+          "newUsers",
+          "sessions",
+          "avgSessionDuration",
+          "bounceRate",
+        ],
+        [
+          // ...row.dimensions.map((dimension) => dimension),
+          ..._.flattenDeep(row.metrics.map((metric) => metric.values)),
+        ]
+      );
+    });
+    console.log(data);
+    return data;
+  },
+  getGaTrafficByDay: async (campaignId, fromDate, toDate) => {
+    const campaign = await CampaignModel.findById(campaignId).lean();
+    const reports = await GA.analyticsReporting().reports.batchGet({
+      requestBody: {
+        reportRequests: [
+          {
+            viewId: campaign.googleAnalytics.viewId,
+            dateRanges: [
+              {
+                startDate: "2020-07-27",
+                endDate: "2020-07-30",
+              },
+            ],
+            metrics: [{ expression: "ga:1dayUsers" }],
+            dimensions: [{ name: "ga:day" }],
+          },
+        ],
+      },
+    });
     const data = [];
     reports.data.reports[0].data.rows.map((row) => {
       data.push(
         _.zipObject(
-          [
-            "pagePath",
-            "pageviews",
-            "uniquePageviews",
-            "avgTimeOnPage",
-            "entrances",
-            "bounceRate",
-            "exitRate",
-          ],
+          ["day", "numberOfUser"],
           [
             ...row.dimensions.map((dimension) => dimension),
-            ..._.flattenDeep(row.metrics.map((metric) => [...metric.values])),
+            ..._.flattenDeep(row.metrics.map((metric) => metric.values)),
           ]
         )
       );
     });
+    console.log(data);
     return data;
   },
   deleteCampaign: async (campaignId) => {},
