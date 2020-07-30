@@ -152,8 +152,8 @@ module.exports = {
                 endDate: "2020-07-30",
               },
             ],
-            metrics: [{ expression: "ga:1dayUsers" }],
-            dimensions: [{ name: "ga:day" }],
+            metrics: [{ expression: "ga:30dayUsers" }],
+            dimensions: [{ name: "ga:date" }],
           },
         ],
       },
@@ -162,7 +162,7 @@ module.exports = {
     reports.data.reports[0].data.rows.map((row) => {
       data.push(
         _.zipObject(
-          ["day", "numberOfUser"],
+          ["date", "numberOfUser"],
           [
             ...row.dimensions.map((dimension) => dimension),
             ..._.flattenDeep(row.metrics.map((metric) => metric.values)),
