@@ -32,7 +32,6 @@ module.exports = /* GraphQL */ `
     googleAnalytics: googleAnalytics
     createdAt: String
     expiredAt: String
-    workspaceName: String
   }
   type Pagination {
     listCampaign: [Campaign]
@@ -46,7 +45,7 @@ module.exports = /* GraphQL */ `
     getListCampaign(page: Int, query: String): Pagination
     getReports(campaignId: String): ReportEvent
     getGaTraffic(campaignId: String): PageGa
-    getGaTrafficByDay(campaignId: String): [getGaTrafficByDay]
+    getGaTrafficByDay(campaignId: String, startDate: String, endDate: String): [getGaTrafficByDay]
     getSources(campaignId: String): [getSources]
   }
   type Mutation {

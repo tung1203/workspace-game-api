@@ -13,13 +13,11 @@ module.exports = {
       createdAt,
       expiredAt,
     });
-    const workspace = await WorkspaceModel.findOne({ email: email }).lean();
-    campaign.workspaceName = workspace.name;
     return campaign;
   },
 
   getListCampaign: async (page = 1, query) => {
-    const pageSize = 3;
+    const pageSize = 10;
     page = page > 0 ? page : 1;
     let listCampaign, totalCampaign;
 
@@ -35,18 +33,18 @@ module.exports = {
       .skip(pageSize * page - pageSize)
       .limit(pageSize)
       .lean();
-    await Promise.all(
-      listCampaign.map(async (campaign) => {
-        const workspace = await WorkspaceModel.findOne({
-          email: campaign.email,
-        }).lean();
-        if (workspace) {
-          if (campaign.email === workspace.email) {
-            campaign.workspaceName = workspace.name;
-          }
-        }
-      })
-    );
+    // await Promise.all(
+    //   listCampaign.map(async (campaign) => {
+    //     const workspace = await WorkspaceModel.findOne({
+    //       email: campaign.email,
+    //     }).lean();
+    //     if (workspace) {
+    //       if (campaign.email === workspace.email) {
+    //         campaign.workspaceName = workspace.name;
+    //       }
+    //     }
+    //   })
+    // );
     totalCampaign = await CampaignModel.countDocuments(searchName);
     return { listCampaign, totalCampaign };
   },
@@ -136,7 +134,7 @@ module.exports = {
         ]
       );
     });
-    console.log(data);
+    // console.log(data);
     return data;
   },
   getSources: async (campaignId) => {
@@ -185,10 +183,12 @@ module.exports = {
         )
       );
     });
-    console.log(data);
+    // console.log(util.inspect(reports, false, null, true /* enable colors */));
+    // console.log(data);
     return data;
   },
-  getGaTrafficByDay: async (campaignId, fromDate, toDate) => {
+  getGaTrafficByDay: async (campaignId, startDate, endDate) => {
+    const formatYmd = (date) => date.toISOString().slice(0, 10);
     const campaign = await CampaignModel.findById(campaignId).lean();
     const reports = await GA.analyticsReporting().reports.batchGet({
       requestBody: {
@@ -197,8 +197,8 @@ module.exports = {
             viewId: campaign.googleAnalytics.viewId,
             dateRanges: [
               {
-                startDate: "2020-07-27",
-                endDate: "2020-07-30",
+                startDate: formatYmd(new Date(parseInt(startDate))),
+                endDate: formatYmd(new Date(parseInt(endDate))),
               },
             ],
             metrics: [{ expression: "ga:30dayUsers" }],

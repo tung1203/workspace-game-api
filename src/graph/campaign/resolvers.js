@@ -11,8 +11,12 @@ module.exports = {
     getGaTraffic: async (_, { campaignId }) => {
       return await campaignServices.getGaTraffic(campaignId);
     },
-    getGaTrafficByDay: async (_, { campaignId }) => {
-      return await campaignServices.getGaTrafficByDay(campaignId);
+    getGaTrafficByDay: async (_, { campaignId, startDate, endDate }) => {
+      return await campaignServices.getGaTrafficByDay(
+        campaignId,
+        startDate,
+        endDate
+      );
     },
     getSources: async (_, { campaignId }) => {
       return await campaignServices.getSources(campaignId);

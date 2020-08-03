@@ -5,7 +5,7 @@ module.exports = {
   createWorkspace: (name, email) => WorkspaceModel.create({ name, email }),
 
   getListWorkspace: async (page = 1, query) => {
-    const pageSize = 10;
+    const pageSize = 3;
     page = page > 0 ? page : 1;
     let listWorkspace, totalWorkspace;
 
