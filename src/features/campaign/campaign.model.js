@@ -22,6 +22,7 @@ module.exports = mongoose.model(
       type: Number,
       default: null,
     },
+    isActive: { type: Boolean, default: true },
   },
   "campaign"
 );

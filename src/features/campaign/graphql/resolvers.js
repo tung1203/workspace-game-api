@@ -1,13 +1,13 @@
-const campaignServices = require("../../services/campaign");
+const campaignServices = require("../campaign.service");
 
 module.exports = {
   Query: {
     getListCampaign: async (_, { page, query }) => {
       return await campaignServices.getListCampaign(page, query);
     },
-    getReports: (_, { campaignId }) => {
-      return campaignServices.getReports(campaignId);
-    },
+    // getReports: (_, { campaignId }) => {
+    //   return campaignServices.getReports(campaignId);
+    // },
     getGaTraffic: async (_, { campaignId }) => {
       return await campaignServices.getGaTraffic(campaignId);
     },
@@ -33,5 +33,7 @@ module.exports = {
     },
     enableTracking: (_, { campaignId, campaignName }) =>
       campaignServices.enableTracking(campaignId, campaignName),
+    deleteCampaign: (_, { campaignId }) =>
+      campaignServices.deleteCampaign(campaignId),
   },
 };

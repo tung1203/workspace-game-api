@@ -2,7 +2,7 @@ const path = require("path");
 const { google } = require("googleapis");
 
 const auth = new google.auth.GoogleAuth({
-  keyFile: path.join(__dirname, "../../oauth2.keys.json"),
+  keyFile: path.join(__dirname, "../../../oauth2.keys.json"),
   scopes: [
     "https://www.googleapis.com/auth/analytics.readonly",
     "https://www.googleapis.com/auth/analytics.edit",

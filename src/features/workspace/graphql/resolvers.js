@@ -1,4 +1,4 @@
-const workspaceServices = require("../../services/workspace");
+const workspaceServices = require("../workspace.service");
 
 module.exports = {
   Query: {

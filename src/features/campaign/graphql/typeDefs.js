@@ -43,7 +43,7 @@ module.exports = /* GraphQL */ `
   }
   type Query {
     getListCampaign(page: Int, query: String): Pagination
-    getReports(campaignId: String): ReportEvent
+    # getReports(campaignId: String): ReportEvent
     getGaTraffic(campaignId: String): PageGa
     getGaTrafficByDay(campaignId: String, startDate: String, endDate: String): [getGaTrafficByDay]
     getSources(campaignId: String): [getSources]
@@ -56,5 +56,6 @@ module.exports = /* GraphQL */ `
       expiredAt: String
     ): Campaign
     enableTracking(campaignId: String, campaignName: String): String
+    deleteCampaign(campaignId: String): Boolean
   }
 `;

@@ -1,5 +1,5 @@
-const WorkspaceModel = require("../models/workspace");
-const escapeRegex = require("../utils/regex-escape");
+const WorkspaceModel = require("./workspace.model");
+const escapeRegex = require("../../common/utils/regex-escape");
 
 module.exports = {
   createWorkspace: (name, email) => WorkspaceModel.create({ name, email }),

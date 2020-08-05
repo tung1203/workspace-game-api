@@ -1,7 +1,6 @@
-const CampaignModel = require("../models/campaign");
-const WorkspaceModel = require("../models/workspace");
-const escapeRegex = require("../utils/regex-escape");
-const GA = require("../utils/googleAnalytics");
+const CampaignModel = require("./campaign.model");
+const escapeRegex = require("../../common/utils/regex-escape");
+const GA = require("../../common/utils/googleAnalytics");
 const util = require("util");
 const _ = require("lodash");
 
@@ -63,7 +62,6 @@ module.exports = {
         name: campaignName,
       },
     });
-    console.log(view.data.id);
     await CampaignModel.findOneAndUpdate(
       { _id: campaignId },
       {
@@ -118,22 +116,24 @@ module.exports = {
     });
     // console.log(util.inspect(reports, false, null, true /* enable colors */));
     let data;
-    reports.data.reports[0].data.rows.map((row) => {
-      data = _.zipObject(
-        [
-          "pageviews",
-          "users",
-          "newUsers",
-          "sessions",
-          "avgSessionDuration",
-          "bounceRate",
-        ],
-        [
-          // ...row.dimensions.map((dimension) => dimension),
-          ..._.flattenDeep(row.metrics.map((metric) => metric.values)),
-        ]
-      );
-    });
+
+    reports.data.reports[0].data.rows &&
+      reports.data.reports[0].data.rows.map((row) => {
+        data = _.zipObject(
+          [
+            "pageviews",
+            "users",
+            "newUsers",
+            "sessions",
+            "avgSessionDuration",
+            "bounceRate",
+          ],
+          [
+            // ...row.dimensions.map((dimension) => dimension),
+            ..._.flattenDeep(row.metrics.map((metric) => metric.values)),
+          ]
+        );
+      });
     // console.log(data);
     return data;
   },
@@ -164,25 +164,26 @@ module.exports = {
       },
     });
     const data = [];
-    reports.data.reports[0].data.rows.map((row) => {
-      data.push(
-        _.zipObject(
-          [
-            "sourceMedium",
-            "users",
-            "newUsers",
-            "sessions",
-            "bounceRate",
-            "pageviewsPerSession",
-            "avgSessionDuration",
-          ],
-          [
-            ...row.dimensions.map((dimension) => dimension),
-            ..._.flattenDeep(row.metrics.map((metric) => metric.values)),
-          ]
-        )
-      );
-    });
+    reports.data.reports[0].data.rows &&
+      reports.data.reports[0].data.rows.map((row) => {
+        data.push(
+          _.zipObject(
+            [
+              "sourceMedium",
+              "users",
+              "newUsers",
+              "sessions",
+              "bounceRate",
+              "pageviewsPerSession",
+              "avgSessionDuration",
+            ],
+            [
+              ...row.dimensions.map((dimension) => dimension),
+              ..._.flattenDeep(row.metrics.map((metric) => metric.values)),
+            ]
+          )
+        );
+      });
     // console.log(util.inspect(reports, false, null, true /* enable colors */));
     // console.log(data);
     return data;
@@ -208,21 +209,32 @@ module.exports = {
       },
     });
     const data = [];
-    reports.data.reports[0].data.rows.map((row) => {
-      data.push(
-        _.zipObject(
-          ["date", "numberOfUser"],
-          [
-            ...row.dimensions.map((dimension) => dimension),
-            ..._.flattenDeep(row.metrics.map((metric) => metric.values)),
-          ]
-        )
-      );
-    });
+    reports.data.reports[0].data.rows &&
+      reports.data.reports[0].data.rows.map((row) => {
+        data.push(
+          _.zipObject(
+            ["date", "numberOfUser"],
+            [
+              ...row.dimensions.map((dimension) => dimension),
+              ..._.flattenDeep(row.metrics.map((metric) => metric.values)),
+            ]
+          )
+        );
+      });
     console.log(data);
     return data;
   },
-  deleteCampaign: async (campaignId) => {},
+  deleteCampaign: (campaignId) => {
+    CampaignModel.findOneAndUpdate(
+      { _id: campaignId },
+      {
+        $set: {
+          isActive: false,
+        },
+      }
+    );
+    return true;
+  },
 
   // enableTracking: async (campaignId) => {
   //   const campaign = await CampaignModel.findById({ _id: campaignId }).lean();
